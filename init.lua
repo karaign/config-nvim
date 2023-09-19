@@ -213,7 +213,7 @@ vim.o.timeoutlen = 300
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
--- NOTE: You should make sure your terminal supports this
+-- Terminal settings
 vim.o.shell = '/usr/local/bin/fish'
 vim.o.termguicolors = true
 vim.keymap.set('t', '<Esc><Esc>', [[<C-\><C-n>]])

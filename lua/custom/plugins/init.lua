@@ -3,38 +3,15 @@
 --
 -- See the kickstart.nvim README for more information
 
-local nvim_logo = {
-	[[                                   __                ]],
-	[[      ___     ___    ___   __  __ /\_\    ___ ___    ]],
-	[[     / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\  ]],
-	[[    /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
-	[[    \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
-	[[     \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
-}
-
-local kitty = {
-	"          |\\      _,,,---,,_            ",
-	"    ZZZzz /,`.-'`'    -.  ;-;;,_        ",
-	"         |,4-  ) )-,_. ,\\ (  `'-'       ",
-	"        '---''(_/--'  `-'\\_)  Felix Lee "
-}
-
-local SESSION_DIR = "~/.config/nvim/sessions"
 
 return {
-  {
-    "startup-nvim/startup.nvim",
-    dependencies = {"nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim"},
-    config = function ()
-    	require("startup").setup()
-    end
-  },
-
   {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     config = function()
       require("telescope").load_extension("file_browser")
+      vim.keymap.set('n', '<leader>f', require("telescope").extensions.file_browser.file_browser,
+	{ desc = 'Browse [f]iles' })
     end
   },
 
@@ -61,9 +38,11 @@ return {
     "AckslD/nvim-neoclip.lua",
     dependencies = { "nvim-telescope/telescope.nvim" },
     config = function ()
-      require("neoclip").setup()
+      require("neoclip").setup({
+	keys = {telescope = { i = { paste = "<cr>", select = "<c-b>" } } } -- b for bump!
+      })
       require("telescope").load_extension("neoclip")
-      vim.keymap.set('n', '<leader>p', require("telescope").extensions.neoclip.neoclip, { desc = "[P]aste from history "})
+      vim.keymap.set('n', '<leader>p', require("telescope").extensions.neoclip.neoclip, { desc = "[P]aste from history"})
     end
   }
 }
