@@ -1,3 +1,9 @@
+-- @diagnostic disable: missing-fields
+
+-- make nvim shut up about the mouse
+vim.cmd('aunmenu PopUp.How-to\\ disable\\ mouse')
+vim.cmd('aunmenu PopUp.-1-')
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -91,16 +97,31 @@ require('lazy').setup({
       end,
     },
   },
-
+   
   {
-    -- Theme inspired by Atom
-   'navarasu/onedark.nvim',
-    -- 'RRethy/nvim-base16',
-    priority = 1000,
+   'ThemerCorp/themer.lua',
+    priority = 1001,
     config = function()
-      vim.cmd.colorscheme 'onedark'
-    end,
+      require("themer").setup({
+        colorscheme = "kanagawa",
+        styles = {
+          comment = { style = "italic" }
+        }
+      })
+      require("telescope").load_extension("themes")
+    end
   },
+
+  -- {
+   --  -- Theme inspired by Atom
+   -- 'navarasu/onedark.nvim',
+   --  priority = 1000,
+   --  config = function()
+   --    vim.cmd.colorscheme 'onedark'
+   --  end,
+  -- },
+
+    -- 'RRethy/nvim-base16',
 
   {
     -- Set lualine as statusline
@@ -109,7 +130,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
+        -- theme = 'auto',
         component_separators = '|',
         section_separators = '',
       },
@@ -130,11 +151,23 @@ require('lazy').setup({
   -- "gc" to comment visual regions/lines
   { 'numToStr/Comment.nvim', opts = {} },
 
+  -- popup terminal
+  {'akinsho/toggleterm.nvim',
+    version = "*",
+    config = function ()
+      require('toggleterm').setup({
+        open_mapping = [[<c-`>]],
+        shell = '/usr/local/bin/fish'
+      })
+    end
+  },
+
   -- Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
     dependencies = {
+      'nvim-tree/nvim-web-devicons',
       'nvim-lua/plenary.nvim',
       -- Fuzzy Finder Algorithm which requires local dependencies to be built.
       -- Only load if `make` is available. Make sure you have the system
@@ -249,6 +282,9 @@ require('telescope').setup {
         ['<C-d>'] = false,
       },
     },
+   pickers = {
+    colorscheme = { enable_preview = true }
+   }
   },
 }
 

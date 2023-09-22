@@ -26,6 +26,17 @@ return {
   },
 
   {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+        require("nvim-surround").setup({
+            -- Configuration here, or leave empty to use defaults
+        })
+    end
+  },
+
+  {
     "rmagatti/session-lens",
     dependencies = { "rmagatti/auto-session", "nvim-telescope/telescope.nvim" },
     config = function ()
@@ -42,7 +53,7 @@ return {
 	keys = {telescope = { i = { paste = "<cr>", select = "<c-b>" } } } -- b for bump!
       })
       require("telescope").load_extension("neoclip")
-      vim.keymap.set('n', '<leader>p', require("telescope").extensions.neoclip.neoclip, { desc = "[P]aste from history"})
+      vim.keymap.set('n', '"p', require("telescope").extensions.neoclip.neoclip, { desc = "[P]aste from history"})
     end
   }
 }
