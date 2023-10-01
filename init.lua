@@ -1,8 +1,14 @@
--- @diagnostic disable: missing-fields
+-- Neovide specific
+if vim.g.neovide then
+  require("init-neovide")
+end
 
 -- make nvim shut up about the mouse
 vim.cmd('aunmenu PopUp.How-to\\ disable\\ mouse')
 vim.cmd('aunmenu PopUp.-1-')
+
+-- doubletap ctrl to exit modes
+-- vim.keymap.set('', '<C><C>', '<C-[>')
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -53,7 +59,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -77,7 +83,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -91,46 +97,51 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
       on_attach = function(bufnr)
-        vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk, { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
+        vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk,
+          { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
         vim.keymap.set('n', '<leader>gn', require('gitsigns').next_hunk, { buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
         vim.keymap.set('n', '<leader>gh', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview [H]unk' })
       end,
     },
   },
-   
+
   {
-   'ThemerCorp/themer.lua',
+    'ThemerCorp/themer.lua',
     priority = 1001,
     config = function()
       require("themer").setup({
         colorscheme = "kanagawa",
         styles = {
-          comment = { style = "italic" }
+          comment = { style = "italic" },
+          diagnostic = {
+            underline = {
+              warn = { fg = "NONE", style = "underdashed" },
+              info = { fg = "NONE", style = "underdotted" },
+              hint = { fg = "NONE", style = "underdotted" },
+            }
+          }
         }
       })
       require("telescope").load_extension("themes")
     end
   },
 
-  -- {
-   --  -- Theme inspired by Atom
-   -- 'navarasu/onedark.nvim',
-   --  priority = 1000,
-   --  config = function()
-   --    vim.cmd.colorscheme 'onedark'
-   --  end,
-  -- },
-
-    -- 'RRethy/nvim-base16',
-
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
+    dependencies = { 'ThemerCorp/themer.lua' },
+
+    -- config = function()
+    --   my_theme = require('lualine.themes.themer')
+    --   my_theme.insert.
+    --   require("themer")
+    -- end,
+
     -- See `:help lualine.txt`
     opts = {
       options = {
         icons_enabled = false,
-        -- theme = 'auto',
+        -- theme = 'themer',
         component_separators = '|',
         section_separators = '',
       },
@@ -152,9 +163,10 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim', opts = {} },
 
   -- popup terminal
-  {'akinsho/toggleterm.nvim',
+  {
+    'akinsho/toggleterm.nvim',
     version = "*",
-    config = function ()
+    config = function()
       require('toggleterm').setup({
         open_mapping = [[<c-`>]],
         shell = '/usr/local/bin/fish'
@@ -197,7 +209,7 @@ require('lazy').setup({
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
   -- require 'kickstart.plugins.autoformat',
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
@@ -282,9 +294,9 @@ require('telescope').setup {
         ['<C-d>'] = false,
       },
     },
-   pickers = {
-    colorscheme = { enable_preview = true }
-   }
+    pickers = {
+      colorscheme = { enable_preview = true }
+    }
   },
 }
 
@@ -302,7 +314,7 @@ vim.keymap.set('n', '<leader>/', function()
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
-vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' } )
+vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
@@ -310,7 +322,7 @@ vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 -- [[ Configure Treesitter ]]
--- See `:help nvim-treesitter` 
+-- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
@@ -374,6 +386,34 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+
+-- [[ Configure diagnostics ]]
+--
+-- vim.diagnostic.config({
+--   -- Only show virtual text for errors
+--   virtual_text = {
+--     severity = vim.diagnostic.severity.ERROR
+--   },
+--   -- Only underline errors
+--   underline = {
+--     severity = vim.diagnostic.severity.ERROR
+--   }
+-- })
+--
+-- Change signs
+local function set_sign(name, sign)
+  vim.fn.sign_define(name, { text = sign, texthl = name })
+end
+
+set_sign('DiagnosticSignError', '󰹆')
+set_sign('DiagnosticSignWarn', '')
+set_sign('DiagnosticSignInfo', '󰋽')
+set_sign('DiagnosticSignHint', '󱩎')
+
+-- Get rid of annoying highlighting
+local function disable_hl_group(group)
+
+end
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
