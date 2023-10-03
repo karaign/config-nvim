@@ -1,3 +1,4 @@
+MY_COLORSCHEME = "kanagawa"
 -- Neovide specific
 if vim.g.neovide then
   require("init-neovide")
@@ -7,8 +8,9 @@ end
 vim.cmd('aunmenu PopUp.How-to\\ disable\\ mouse')
 vim.cmd('aunmenu PopUp.-1-')
 
--- doubletap ctrl to exit modes
--- vim.keymap.set('', '<C><C>', '<C-[>')
+-- doubletap ctrl to exit insert or visual mode
+-- vim.keymap.set('i', '<C><C>', '<C-[>')
+-- vim.keymap.set('v', '<C><C>', '<C-[>')
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -109,8 +111,20 @@ require('lazy').setup({
     'ThemerCorp/themer.lua',
     priority = 1001,
     config = function()
+
+      -- Neovide specific: change titlebar colour on theme change
+      -- if vim.g.neovide then
+      --   vim.api.nvim_create_autocmd("ColorScheme", {
+      --     pattern = "themer_*",
+      --     callback = function (tbl)
+      --       local pallette = require("themer.modules.core.api").get_cp(tbl.match)
+      --       vim.g.neovide_background_color = pallette.bg.alt
+      --     end
+      --   })
+      -- end
+
       require("themer").setup({
-        colorscheme = "kanagawa",
+        colorscheme = MY_COLORSCHEME,
         styles = {
           comment = { style = "italic" },
           diagnostic = {
@@ -130,22 +144,8 @@ require('lazy').setup({
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
     dependencies = { 'ThemerCorp/themer.lua' },
-
-    -- config = function()
-    --   my_theme = require('lualine.themes.themer')
-    --   my_theme.insert.
-    --   require("themer")
-    -- end,
-
+    config = require('init-lualine')
     -- See `:help lualine.txt`
-    opts = {
-      options = {
-        icons_enabled = false,
-        -- theme = 'themer',
-        component_separators = '|',
-        section_separators = '',
-      },
-    },
   },
 
   {
@@ -197,6 +197,7 @@ require('lazy').setup({
   },
 
   {
+
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
@@ -410,10 +411,6 @@ set_sign('DiagnosticSignWarn', '')
 set_sign('DiagnosticSignInfo', '󰋽')
 set_sign('DiagnosticSignHint', '󱩎')
 
--- Get rid of annoying highlighting
-local function disable_hl_group(group)
-
-end
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
