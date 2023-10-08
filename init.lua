@@ -108,35 +108,13 @@ require('lazy').setup({
   },
 
   {
-    'ThemerCorp/themer.lua',
+    'RRethy/nvim-base16',
     priority = 1001,
-    config = function()
-
-      -- Neovide specific: change titlebar colour on theme change
-      -- if vim.g.neovide then
-      --   vim.api.nvim_create_autocmd("ColorScheme", {
-      --     pattern = "themer_*",
-      --     callback = function (tbl)
-      --       local pallette = require("themer.modules.core.api").get_cp(tbl.match)
-      --       vim.g.neovide_background_color = pallette.bg.alt
-      --     end
-      --   })
-      -- end
-
-      require("themer").setup({
-        colorscheme = MY_COLORSCHEME,
-        styles = {
-          comment = { style = "italic" },
-          diagnostic = {
-            underline = {
-              warn = { fg = "NONE", style = "underdashed" },
-              info = { fg = "NONE", style = "underdotted" },
-              hint = { fg = "NONE", style = "underdotted" },
-            }
-          }
-        }
+    config = function ()
+      require('base16-colorscheme').with_config({
+        telescope = false
       })
-      require("telescope").load_extension("themes")
+      vim.cmd('colorscheme base16-' .. MY_COLORSCHEME)
     end
   },
 
@@ -307,6 +285,7 @@ pcall(require('telescope').load_extension, 'fzf')
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>cs', require('telescope.builtin').colorscheme, { desc = '[C]olour[S]chemes'})
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -326,7 +305,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim', 'markdown', 'markdown_inline' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,

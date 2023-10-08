@@ -42,7 +42,7 @@ local settings = {
             { "󱂬 Recent Sessions", "Telescope session-lens search_session", "ss"},
             { "󰋚 Recent Files", "Telescope oldfiles", "of" },
             { "󱘲 File Browser", "Telescope file_browser", "fb" },
-            { "󰏘 Colorschemes", "Telescope themes", "cs" },
+            { "󰏘 Colorschemes", "Telescope colorscheme", "cs" },
             { "󰈔 New File", "lua require'startup'.new_file()", "nf" },
         },
         highlight = "String",

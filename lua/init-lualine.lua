@@ -38,6 +38,7 @@ local opts = {
     section_separators = { left = '', right = '' },
     disabled_filetypes = {'NvimTree', 'neo-tree'},
   },
+  theme = 'base16',
   sections = {
     lualine_a = {
       { 'mode', separator = bub_sep, right_padding = 2 }
@@ -63,67 +64,16 @@ local opts = {
   },
   extensions = {'toggleterm', 'lazy'}
 }
-  -- I dislike both the auto-genned colorscheme
-  -- and the themer-genned colorscheme for diff.
-  -- reasons, so I'll cobble together a custom
-  -- one using themer as a base:
-local function mk_theme()
----@diagnostic disable: need-check-nil
----@diagnostic disable: undefined-field
-  -- it's fine trust me
-  local colors = require("themer.modules.core.api").get_cp(require("themer.config")("get").colorscheme)
-  local my_thm = {}
-
-  local insert = colors.syntax.string
-  local normal = colors.syntax['function']
-  local visual = colors.syntax.keyword
-  local replace = colors.diagnostic.error
-  local command = colors.syntax.constant
-
-  my_thm.normal = {
-    a = { bg = normal, fg = colors.bg.alt, gui = "bold" },
-    b = { bg = colors.bg.selected, fg = normal},
-    c = { bg = colors.bg.alt, fg = colors.dimmed.subtle },
-  }
-
-  my_thm.insert = {
-    a = { bg = insert, fg = colors.bg.alt , gui = "bold"},
-    b = { bg = colors.bg.selected, fg = insert },
-  }
-
-  my_thm.command = {
-    a = { bg = command, fg = colors.bg.alt, gui = "bold" },
-    b = { bg = colors.bg.selected, fg = command },
-  }
-
-  my_thm.visual = {
-    a = { bg = visual, fg = colors.bg.alt, gui = "bold" },
-    b = { bg = colors.bg.selected, fg = visual },
-  }
-
-  my_thm.replace = {
-    a = { bg = replace, fg = colors.bg.alt, gui = "bold" },
-    b = { bg = colors.bg.selected, fg = replace},
-  }
-
-  my_thm.inactive = {
-    a = { bg = colors.bg.selected, fg = colors.dimmed.subtle},
-    b = { bg = colors.bg.alt, fg = colors.dimmed.subtle, gui = "bold" },
-    c = { bg = colors.bg.alt, fg = colors.dimmed.subtle },
-  }
-
-  return my_thm
-end
 
 local function setup()
-  opts.options.theme = mk_theme()
+  -- opts.options.theme = mk_theme()
   require("lualine").setup(opts)
 end
 
 return function ()
   setup()
-  vim.api.nvim_create_autocmd("ColorScheme", {
-    callback = setup
-  })
+  -- vim.api.nvim_create_autocmd("ColorScheme", {
+  --   callback = setup
+  -- })
 end
 
