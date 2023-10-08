@@ -22,7 +22,7 @@ vim.keymap.set('v', '<D-v>', '"+P') -- Paste visual mtestode
 vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
 vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
 vim.keymap.set('n', '<D-w>', ':q<CR>') -- Close window
-vim.keymap.set('n', '<D-q>', ':qa') -- Close neovim
+vim.keymap.set('n', '<C-q>', ':qa<CR>') -- Close neovim
 vim.keymap.set('n', '<D-t>', ':tabnew<CR>') -- New tab
 vim.keymap.set('n', '<D-a>', 'ggVG<CR>') -- Select all
 vim.keymap.set('i', '<D-a>', '<Esc>ggVG<CR>') -- Select all
