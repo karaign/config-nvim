@@ -1,4 +1,11 @@
-MY_COLORSCHEME = 'atelier-forest'
+MY_COLORSCHEME = 'espresso'
+
+SIGNS_DIAGNOSTIC = {
+  error = 'E',
+  warn = '!',
+  info = 'i',
+  hint = '?'
+}
 
 -- Neovide specific
 if vim.g.neovide then
@@ -63,6 +70,16 @@ require('lazy').setup({
     },
   },
 
+  -- Always open help in vsplit
+  {
+    'karaign/help-vsplit.nvim',
+    config = function()
+      require('help-vsplit').setup({
+        side = 'left'
+      })
+    end
+  },
+
   {
     -- Autocompletion
     'hrsh7th/nvim-cmp',
@@ -103,11 +120,11 @@ require('lazy').setup({
   },
 
   {
-    'RRethy/nvim-base16',
+    'karaign/nvim-base16',
     priority = 1001,
     config = function()
       require('base16-colorscheme').with_config({
-        telescope = false
+        telescope = true
       })
       vim.cmd('colorscheme base16-' .. MY_COLORSCHEME)
     end
@@ -116,7 +133,7 @@ require('lazy').setup({
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'ThemerCorp/themer.lua' },
+    dependencies = { 'karaign/nvim-base16' },
     config = require('init.lualine')
     -- See `:help lualine.txt`
   },
@@ -124,11 +141,13 @@ require('lazy').setup({
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
     opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
+      indent = {
+        char = '┊',
+      }
     },
   },
 
@@ -142,7 +161,14 @@ require('lazy').setup({
     config = function()
       require('toggleterm').setup({
         open_mapping = [[<c-`>]],
-        shell = '/usr/local/bin/fish'
+        shade_terminals = true,
+        shell = '/usr/local/bin/fish',
+        direction = 'float',
+        float_opts = {
+          border = 'solid',
+          width = 90,
+          height = 20
+        }
       })
     end
   },

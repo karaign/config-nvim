@@ -14,11 +14,13 @@ local function set_sign(name, sign)
   vim.fn.sign_define(name, { text = sign, texthl = name })
 end
 
-set_sign('DiagnosticSignError', '󰹆')
-set_sign('DiagnosticSignWarn', '')
-set_sign('DiagnosticSignInfo', '󰋽')
-set_sign('DiagnosticSignHint', '󱩎')
+local function capitalized(str)
+  return (str:gsub("^%l", string.upper))
+end
 
+for k, v in pairs(SIGNS_DIAGNOSTIC) do
+  set_sign('DiagnosticSign' .. capitalized(k), v)
+end
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })

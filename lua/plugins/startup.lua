@@ -1,17 +1,17 @@
 local nvim_logo = {
-	[[                                   __                ]],
-	[[      ___     ___    ___   __  __ /\_\    ___ ___    ]],
-	[[     / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\  ]],
-	[[    /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
-	[[    \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
-	[[     \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
+    [[                                   __                ]],
+    [[      ___     ___    ___   __  __ /\_\    ___ ___    ]],
+    [[     / _ `\  / __`\ / __`\/\ \/\ \\/\ \  / __` __`\  ]],
+    [[    /\ \/\ \/\  __//\ \_\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
+    [[    \ \_\ \_\ \____\ \____/\ \___/  \ \_\ \_\ \_\ \_\]],
+    [[     \/_/\/_/\/____/\/___/  \/__/    \/_/\/_/\/_/\/_/]],
 }
 
 local kitty = {
-	"          |\\      _,,,---,,_            ",
-	"    ZZZzz /,`.-'`'    -.  ;-;;,_        ",
-	"         |,4-  ) )-,_. ,\\ (  `'-'       ",
-	"        '---''(_/--'  `-'\\_)  Felix Lee "
+    "          |\\      _,,,---,,_            ",
+    "    ZZZzz /,`.-'`'    -.  ;-;;,_        ",
+    "         |,4-  ) )-,_. ,\\ (  `'-'       ",
+    "        '---''(_/--'  `-'\\_)  Felix Lee "
 }
 
 local settings = {
@@ -39,9 +39,9 @@ local settings = {
         content = {
             { "󰈞 Find File", "Telescope find_files", "sf" },
             { "󱎸 Find Word", "Telescope live_grep", "sg" },
-            { "󱂬 Recent Sessions", "Telescope session-lens search_session", "ss"},
+            { "󱂬 Recent Sessions", "Telescope session-lens search_session", "ss" },
             { "󰋚 Recent Files", "Telescope oldfiles", "of" },
-            { "󱘲 File Browser", "Telescope file_browser", "fb" },
+            { "󱘲 File Browser", "Neotree float", "fb" },
             { "󰏘 Colorschemes", "Telescope colorscheme", "cs" },
             { "󰈔 New File", "lua require'startup'.new_file()", "nf" },
         },
@@ -84,11 +84,11 @@ local settings = {
 }
 
 return {
-  {
-    "startup-nvim/startup.nvim",
-    dependencies = {"nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim"},
-    config = function ()
-    	require("startup").setup(settings)
-    end
-  },
+    {
+        "startup-nvim/startup.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+        config = function()
+            require("startup").setup(settings)
+        end
+    },
 }
