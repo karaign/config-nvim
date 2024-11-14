@@ -1,10 +1,10 @@
-MY_COLORSCHEME = 'espresso'
+MY_COLORSCHEME = 'ayu-dark'
 
 SIGNS_DIAGNOSTIC = {
   error = 'E',
   warn = '!',
   info = 'i',
-  hint = '?'
+  hint = '*'
 }
 
 -- Neovide specific
@@ -20,6 +20,9 @@ vim.cmd('aunmenu PopUp.-1-')
 -- See `:help mapleader`
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+-- Set tab width to 4, the way god intended
+vim.tabstop = 4
 
 -- Install package manager
 --    `:help lazy.nvim.txt` for more info
@@ -165,7 +168,7 @@ require('lazy').setup({
         shell = '/usr/local/bin/fish',
         direction = 'float',
         float_opts = {
-          border = 'solid',
+          border = 'single',
           width = 90,
           height = 20
         }

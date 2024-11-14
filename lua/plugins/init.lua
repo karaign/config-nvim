@@ -16,6 +16,9 @@ return {
     config = function ()
       require("neo-tree").setup({
 	enable_diagnostics = false,
+	filesystem = {
+	  use_libuv_file_watcher = true
+	},
 	window = {
 	  mappings = {
 	    ["<space>"] = {
@@ -76,6 +79,18 @@ return {
 	auto_session_suppress_dirs = { "~/", "~/Downloads", "~/Developer", "/"}
       }
     end
+  },
+
+  {
+    "Olical/conjure",
+    config = function ()
+    	vim.g["conjure#mapping#prefix"] = "<leader>c"
+    end
+  },
+
+  {
+    "clojure-vim/vim-jack-in",
+    dependencies = {"tpope/vim-dispatch", "radenling/vim-dispatch-neovim"}
   },
 
   -- {

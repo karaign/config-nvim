@@ -105,7 +105,13 @@ return {
     "MunifTanjim/nui.nvim",
   },
   config = function ()
-    require('neo-tree').setup {}
+    require('neo-tree').setup {
+      window = {
+        filesystem = {
+          use_libuv_file_watcher = true
+        }
+      }
+    }
   end,
 }
 ```
