@@ -64,6 +64,9 @@ local servers = {
       telemetry = { enable = false },
     },
   },
+
+  -- Use deno LSP when deno config file is present
+  denols = {}
 }
 
 -- Setup neovim lua configuration
@@ -82,12 +85,19 @@ mason_lspconfig.setup {
 
 mason_lspconfig.setup_handlers {
   function(server_name)
-    require('lspconfig')[server_name].setup {
+    local nvim_lsp = require('lspconfig')
+    local setup_tbl = {
       capabilities = capabilities,
       on_attach = on_attach,
       settings = servers[server_name],
       filetypes = (servers[server_name] or {}).filetypes,
     }
+    -- Special loading considerations:
+    -- Only load deno LSP when deno config file is present
+    if server_name == 'denols' then
+      setup_tbl.root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc")
+    end
+    nvim_lsp[server_name].setup(setup_tbl)
   end
 }
 
