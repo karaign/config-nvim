@@ -12,6 +12,20 @@ if vim.g.neovide then
   require("init.neovide")
 end
 
+-- Global helper functions to tell if we're in Vscode
+function VSCODE()
+  return vim.g.vscode
+end
+
+function NOT_VSCODE()
+  return not vim.g.vscode
+end
+
+-- Vscode specific
+if VSCODE() then
+  require("init.vscode")
+end
+
 -- make nvim shut up about the mouse
 vim.cmd('aunmenu PopUp.How-to\\ disable\\ mouse')
 vim.cmd('aunmenu PopUp.-1-')
