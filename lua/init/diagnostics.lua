@@ -18,7 +18,12 @@ local function capitalized(str)
   return (str:gsub("^%l", string.upper))
 end
 
-for k, v in pairs(SIGNS_DIAGNOSTIC) do
+for k, v in pairs({
+    error = 'E',
+    warn = '!',
+    info = 'i',
+    hint = '*'
+  }) do
   set_sign('DiagnosticSign' .. capitalized(k), v)
 end
 

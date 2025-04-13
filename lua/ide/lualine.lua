@@ -30,7 +30,6 @@ local custom_branch = {
   end,
 }
 
-
 local opts = {
   options = {
     icons_enabled = false,
@@ -64,14 +63,15 @@ local opts = {
   extensions = { 'toggleterm', 'lazy' }
 }
 
-local function setup()
+local function init()
   -- opts.options.theme = mk_theme()
   require("lualine").setup(opts)
 end
 
-return function()
-  setup()
-  -- vim.api.nvim_create_autocmd("ColorScheme", {
-  --   callback = setup
-  -- })
-end
+return {
+    -- Set lualine as statusline
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'karaign/nvim-base16' },
+    config = init
+    -- See `:help lualine.txt`
+}
