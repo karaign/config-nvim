@@ -1,4 +1,8 @@
 tags
+.clj-kondo
+.github
+.lsp
+.stylua.toml
 test.sh
 .luarc.json
 nvim
