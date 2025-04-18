@@ -53,7 +53,7 @@ local init = function ()
   --  define the property 'filetypes' to the map in question.
   local servers = {
     -- clangd = {},
-    gopls = {},
+    -- gopls = {},
     -- pyright = {},
     -- rust_analyzer = {},
     -- tsserver = {},

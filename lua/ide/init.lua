@@ -49,9 +49,9 @@ return {
     version = "*",
     config = function()
       require('toggleterm').setup({
-        open_mapping = [[<c-`>]],
+        open_mapping = [[<C-`>]],
         shade_terminals = true,
-        shell = '/usr/local/bin/fish',
+        shell = vim.o.shell,
         direction = 'float',
         float_opts = {
           border = 'single',

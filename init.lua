@@ -1,9 +1,29 @@
+-- First things first, set preferred colorscheme
+-- TODO: Ability to change this at runtime
 MY_COLORSCHEME = 'ayu-dark'
+
+-- OS-specific things
+PLATFORM = vim.loop.os_uname().sysname
+
+-- Shorthand func for selecting stuff based on platform
+-- When called with 2 args, opt1 is WIN and opt2 is UNIX
+-- When called with 3 args, opt1 is WIN, opt2 is Mac and opt3 is Linux
+PS = function (opt1, opt2, opt3)
+  if PLATFORM == 'Windows_NT' then
+    return opt1
+  elseif PLATFORM == 'Darwin' or opt3 == nil then
+    return opt2
+  else
+    return opt3 -- Assuming Linux because... seriously
+  end
+end
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+vim.o.fillchars = 'vert:‧,horiz:‧'
 
 -- Install package manager
 --    `:help lazy.nvim.txt` for more info
@@ -53,7 +73,7 @@ vim.o.timeoutlen = 300
 vim.o.completeopt = 'menuone,noselect'
 
 -- Terminal settings
-vim.o.shell = '/usr/local/bin/fish'
+vim.o.shell = PS('pwsh', '/usr/local/bin/fish')
 vim.o.termguicolors = true
 vim.keymap.set('t', '<Esc><Esc>', [[<C-\><C-n>]])
 
@@ -99,6 +119,7 @@ else -- Running standalone
   -- make nvim shut up about the mouse
   vim.cmd('aunmenu PopUp.How-to\\ disable\\ mouse')
   vim.cmd('aunmenu PopUp.-1-')
+  vim.cmd('aunmenu PopUp.-2-')
 
   -- configure diagnostics
   require('init.diagnostics')
@@ -110,6 +131,7 @@ else -- Running standalone
   --  Remove this option if you want your OS clipboard to remain independent.
   --  See `:help 'clipboard'`
   vim.o.clipboard = 'unnamedplus'
+  vim.o.nu = true
 end
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
