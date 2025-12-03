@@ -133,7 +133,7 @@ return {
           load_on_setup = true
         }
       }
-      -- vim.keymap.set('n', '<leader>ss', require('session-lens').search_session, { desc = '[S]earch [S]essions' })
+      vim.keymap.set('n', '<leader>ss', ':Telescope session-lens<CR>', { desc = '[S]earch [S]essions' })
     end
   },
 
