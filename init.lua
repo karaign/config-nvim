@@ -101,7 +101,7 @@ else -- Running standalone
   vim.cmd('aunmenu PopUp.-1-')
 
   -- configure diagnostics
-  require('init.diagnostics')
+  -- require('init.diagnostics')
 
   -- Enable mouse mode
   vim.o.mouse = 'a'
