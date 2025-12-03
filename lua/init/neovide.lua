@@ -63,9 +63,12 @@ vim.g.neovide_cursor_animate_command_line = false
 
 -- Set up nice titlebar on Windows
 if PLATFORM == 'Windows_NT' then
- vim.g.neovide_title_background_color = string.format(
-    "%x",
-    vim.api.nvim_get_hl(0, {id=vim.api.nvim_get_hl_id_by_name("Normal")}).bg
-)
+  vim.api.nvim_create_autocmd('ColorScheme', {
+    callback = function ()
+      local hl = vim.api.nvim_get_hl(0, {name="Normal"})
 
+      vim.g.neovide_title_background_color = string.format("%06x", hl.bg)
+      vim.g.neovide_title_text_color = string.format("%06x", hl.fg)
+    end
+  })
 end

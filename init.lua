@@ -23,7 +23,7 @@ end
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.o.fillchars = 'vert:‧,horiz:‧'
+vim.o.fillchars = 'vert:│,horiz:─'
 
 -- Install package manager
 --    `:help lazy.nvim.txt` for more info
@@ -68,6 +68,8 @@ vim.wo.signcolumn = 'yes'
 -- Decrease update time
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
+
+vim.o.title = true
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'

@@ -49,7 +49,7 @@ return {
     version = "*",
     config = function()
       require('toggleterm').setup({
-        open_mapping = [[<C-`>]],
+        open_mapping = [[<c-`>]],
         shade_terminals = true,
         shell = vim.o.shell,
         direction = 'float',
@@ -109,8 +109,12 @@ return {
     config = function ()
     	require("auto-session").setup {
         log_level = "error",
-        auto_session_suppress_dirs = { "~/", "~/Downloads", "~/Developer", "/"}
+        auto_session_suppress_dirs = { "~/", "~/Downloads", "~/Developer", "/"},
+        session_lens = {
+          load_on_setup = true
+        }
       }
+      -- vim.keymap.set('n', '<leader>ss', require('session-lens').search_session, { desc = '[S]earch [S]essions' })
     end
   },
 
@@ -162,14 +166,14 @@ return {
   -- },
   --
 
-  {
-    "rmagatti/session-lens",
-    dependencies = { "rmagatti/auto-session", "nvim-telescope/telescope.nvim" },
-      config = function ()
-    	require("telescope").load_extension("session-lens")
-	vim.keymap.set('n', '<leader>ss', require('session-lens').search_session, { desc = '[S]earch [S]essions' })
-    end
-  },
+ --  {
+ --    "rmagatti/session-lens",
+ --    dependencies = { "rmagatti/auto-session", "nvim-telescope/telescope.nvim" },
+ --      config = function ()
+ --    	require("telescope").load_extension("session-lens")
+	-- vim.keymap.set('n', '<leader>ss', require('session-lens').search_session, { desc = '[S]earch [S]essions' })
+ --    end
+ --  },
 
   {
     "AckslD/nvim-neoclip.lua",
