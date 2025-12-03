@@ -254,7 +254,8 @@ return {
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
     { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
 
-    { 'saghen/blink.cmp', opts = {
+    { 'saghen/blink.cmp',  version="1.*", opts = {
+      fuzzy = { implementation = "prefer_rust" },
       sources = {
         -- add lazydev to your completion providers
         default = { "lazydev", "lsp", "path", "snippets", "buffer" },
